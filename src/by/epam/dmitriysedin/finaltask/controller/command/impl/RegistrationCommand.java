@@ -1,11 +1,13 @@
 package by.epam.dmitriysedin.finaltask.controller.command.impl;
 
 import java.io.IOException;
+import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
@@ -21,9 +23,8 @@ public class RegistrationCommand implements Command{
 	private static final String PARAMETER_EMAIL = "email";
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
-
-	private static final String DEFAULT_PAGE = "/WEB-INF/jsp/default.jsp";
-	private static final String ERROR_PAGE = "/WEB-INF/jsp/error.jsp";
+	
+	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToDefaultPage";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,23 +42,20 @@ public class RegistrationCommand implements Command{
 		password = request.getParameter(PARAMETER_PASSWORD);
 		
 		UserService userService = ServiceProvider.getInstance().getUserService();
-		String page = "";
 		
 		try {
-			userService.registration(createUserInfo(firstName, lastName, email, login, password));
-				request.setAttribute("registration_result", "Вы успешно зарегистрированы. Войдите под своим логином и паролем.");
-				page = DEFAULT_PAGE;
+			userService.isRegistrated(createUserInfo(firstName, lastName, email, login, password));
 			
 		} catch (ServiceException e) {
 			// log
-			page = ERROR_PAGE;
 		} 
 		
-		String url = CreatorFullURL.create(request);
-		request.getSession(true).setAttribute("prev_request", url);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-		dispatcher.forward(request, response);
+		HttpSession session;
+		
+		session = request.getSession(true);
+		
+		
+		response.sendRedirect(REDIRECT_PAGE_URL + "&registration_result=You are successfully registered. Enter your login and password.");
 	}
 
 	private UserInfo createUserInfo(String firstName, String lastName, String email, String login, String password) {

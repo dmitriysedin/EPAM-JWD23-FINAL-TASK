@@ -24,10 +24,13 @@ public class AuthorizationCommand implements Command{
 	private static final String WELCOME_PAGE = "/WEB-INF/jsp/welcome.jsp";
 	private static final String DEFAULT_PAGE = "/WEB-INF/jsp/default.jsp";
 	
-	private static final int wrongUserID = -1;
-
+	private static final String DEFAULT_USER_ROLE = "user";
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession(true);
+		
 		String login;
 		String password;
 
@@ -42,23 +45,11 @@ public class AuthorizationCommand implements Command{
 		try {
 			user = userService.authentification(login, password);
 			
-			
 			if (user == null) {
-				request.setAttribute("error", "password error");
+				request.setAttribute("error", "login or password error");
 				page = DEFAULT_PAGE;
 			} else {
-				if (user.getUserID() == wrongUserID) {
-			
-				request.setAttribute("error", "login error");
-				page = DEFAULT_PAGE;
-				} else {
-				request.setAttribute("user", user);
-				
-				String role = user.getUserRole();
-				HttpSession session = request.getSession(true);
-				session.setAttribute("role", role);
 				page = WELCOME_PAGE;
-				}
 			}
 		} catch (ServiceException e) {
 			// log
@@ -66,8 +57,9 @@ public class AuthorizationCommand implements Command{
 		}
 		
 		String url = CreatorFullURL.create(request);
-		request.getSession(true).setAttribute("prev_request", url);
-
+		
+		session.setAttribute("prev_request", url);
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 		dispatcher.forward(request, response);
 

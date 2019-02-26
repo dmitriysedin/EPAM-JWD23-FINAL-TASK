@@ -36,7 +36,7 @@
 	<h1>${welcom_message}</h1>
 	
 	<h3>
-		<c:out value="${requestScope.registration_result}" />
+		<c:out value="${requestScope.registration_result}"/>
 	</h3>
 
 	<form action="Servlet" method="post">

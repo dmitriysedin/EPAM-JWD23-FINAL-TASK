@@ -7,6 +7,8 @@
 <title>Index</title>
 </head>
 <body>
-<c:redirect url="Servlet?command=goToDefaultPage" />
+
+<c:redirect url="Servlet?command=goToHomePage" />
+
 </body>
 </html>

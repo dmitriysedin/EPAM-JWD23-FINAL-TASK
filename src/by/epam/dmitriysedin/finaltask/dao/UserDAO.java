@@ -9,5 +9,5 @@ public interface UserDAO {
 	
 	boolean isLoginContains(String login) throws DAOException;
 	
-	boolean registration(UserInfo userInfo)  throws DAOException;
+	boolean isRegistrated(UserInfo userInfo)  throws DAOException;
 }

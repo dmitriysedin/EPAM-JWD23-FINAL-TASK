@@ -10,11 +10,11 @@ import by.epam.dmitriysedin.finaltask.dao.DAOException;
 import by.epam.dmitriysedin.finaltask.dao.UserDAO;
 import by.epam.dmitriysedin.finaltask.entity.User;
 import by.epam.dmitriysedin.finaltask.entity.UserInfo;
+import by.epam.dmitriysedin.finaltask.util.PasswordHash;
 
 public class SQLUserDAO implements UserDAO{
 	
 	private static final String QUERY_CHECK_LOGIN = "SELECT * FROM users WHERE user_login=?";
-	private static final String QUERY_CHECK_CREDENTIALS = "SELECT * FROM users WHERE user_login=? and user_password=?";
 	private static final String INSERT_INTO_USERS = "INSERT INTO users(user_login, user_password, user_first_name, "
 			+ "user_last_name, user_email) VALUES(?, ?, ?, ?, ?)";
 	
@@ -55,14 +55,13 @@ public class SQLUserDAO implements UserDAO{
 		
 		try {
 			con = ConnectionPool.getInstance().getConnection();
-			st = con.prepareStatement(QUERY_CHECK_CREDENTIALS);
+			st = con.prepareStatement(QUERY_CHECK_LOGIN);
 
 			st.setString(1, login);
-			st.setString(2, password);
 			
 			rs = st.executeQuery();
-
-			if(rs.next()) {
+	
+			if(rs.next() && PasswordHash.checkPassword(password, rs.getString("user_password"))) {
 				user  = createUser(rs);
 			}
 
@@ -76,7 +75,7 @@ public class SQLUserDAO implements UserDAO{
 }
 	
 	@Override
-	public boolean registration(UserInfo userInfo)  throws DAOException{
+	public boolean isRegistrated(UserInfo userInfo)  throws DAOException{
 		
 		Connection con = null;
 		PreparedStatement st= null;
@@ -86,7 +85,10 @@ public class SQLUserDAO implements UserDAO{
 			st = con.prepareStatement(INSERT_INTO_USERS);
 			
 			st.setString(1, userInfo.getUserLogin());
-			st.setString(2, userInfo.getUserPassword());
+			
+			String hashedPass = PasswordHash.hashPassword(userInfo.getUserPassword());
+			
+			st.setString(2, hashedPass);
 			st.setString(3, userInfo.getUserFirstName());
 			st.setString(4, userInfo.getUserLastName());
 			st.setString(5, userInfo.getUserEmail());

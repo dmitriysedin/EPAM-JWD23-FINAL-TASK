@@ -11,17 +11,12 @@ import by.epam.dmitriysedin.finaltask.service.validation.LoginValidation;
 
 public class UserServiceImpl implements UserService {
 	
-	private static final int wrongUserID = -1;
-
 	@Override
 	public User authentification(String login, String password) throws ServiceException {
 		
 		User user = null;
 		
 		if(!LoginValidation.isLoginContains(login)) {
-			
-			user = new User();
-			user.setUserID(wrongUserID);
 			
 			return user;
 		}
@@ -38,13 +33,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean registration(UserInfo userInfo) throws ServiceException {
+	public boolean isRegistrated(UserInfo userInfo) throws ServiceException {
 		
 		UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
 		
 		boolean registrationResult;
 		try {
-			registrationResult = userDAO.registration(userInfo);
+			registrationResult = userDAO.isRegistrated(userInfo);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
