@@ -21,8 +21,8 @@ public class AuthorizationCommand implements Command{
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
 
-	private static final String WELCOME_PAGE = "/WEB-INF/jsp/welcome.jsp";
-	private static final String DEFAULT_PAGE = "/WEB-INF/jsp/default.jsp";
+	private static final String HOME_PAGE = "/WEB-INF/jsp/home.jsp";
+	private static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
 	
 	private static final String DEFAULT_USER_ROLE = "user";
 	
@@ -47,9 +47,9 @@ public class AuthorizationCommand implements Command{
 			
 			if (user == null) {
 				request.setAttribute("error", "login or password error");
-				page = DEFAULT_PAGE;
+				page = LOGIN_PAGE;
 			} else {
-				page = WELCOME_PAGE;
+				page = HOME_PAGE;
 			}
 		} catch (ServiceException e) {
 			// log

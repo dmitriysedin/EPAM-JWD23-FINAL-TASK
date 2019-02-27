@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
+import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 import by.epam.dmitriysedin.finaltask.entity.MovieInfo;
 
 import by.epam.dmitriysedin.finaltask.service.MovieService;
@@ -43,9 +44,13 @@ public class AddNewMovieCommand implements Command{
 			// log
 		} 
 		
-		//HttpSession session;
+		HttpSession session;
 		
-		//session = request.getSession(true);
+		session = request.getSession(true);
+		
+		String url = CreatorFullURL.create(request);
+		
+		session.setAttribute("prev_request", url);
 		
 		response.sendRedirect(REDIRECT_PAGE_URL);
 	}

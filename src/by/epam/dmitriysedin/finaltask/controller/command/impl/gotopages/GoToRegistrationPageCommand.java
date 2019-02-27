@@ -1,7 +1,6 @@
-package by.epam.dmitriysedin.finaltask.controller.command.impl;
+package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopages;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,13 +12,12 @@ import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 
 
-public class GoToDefaultPageCommand implements Command{
-
-	private static final String TARGET_PAGE = "/WEB-INF/jsp/default.jsp";
+public class GoToRegistrationPageCommand implements Command{
 	
+	private static final String TARGET_PAGE = "/WEB-INF/jsp/registration.jsp";
+
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		HttpSession session;
 		
 		String url = CreatorFullURL.create(request);

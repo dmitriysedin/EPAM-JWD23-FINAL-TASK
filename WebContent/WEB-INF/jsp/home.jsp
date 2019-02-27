@@ -33,7 +33,7 @@
 
 <h1>${welcome_message}</h1>
 
-<a href="Servlet?command=goToDefaultPage">${login}</a>
+<a href="Servlet?command=goToLoginPage">${login}</a>
 <a href="Servlet?command=goToRegistrationPage">${registration}</a>
 <a href="Servlet?command=goToAddNewMovie">${add_movie}</a>
 <a href="Servlet?command=showAllMovies">Movie's list</a>

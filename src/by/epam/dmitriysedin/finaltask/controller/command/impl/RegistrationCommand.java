@@ -1,9 +1,7 @@
 package by.epam.dmitriysedin.finaltask.controller.command.impl;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +22,7 @@ public class RegistrationCommand implements Command{
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
 	
-	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToDefaultPage";
+	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToLoginPage";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -54,6 +52,9 @@ public class RegistrationCommand implements Command{
 		
 		session = request.getSession(true);
 		
+		String url = CreatorFullURL.create(request);
+		
+		session.setAttribute("prev_request", url);
 		
 		response.sendRedirect(REDIRECT_PAGE_URL + "&registration_result=You are successfully registered. Enter your login and password.");
 	}

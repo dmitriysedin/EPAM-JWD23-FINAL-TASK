@@ -13,7 +13,6 @@
     <fmt:setBundle basename="resources.locale" var="loc" />
     <fmt:message bundle="${loc}" key="locale.default.locale_botton.en" var="locale_button_en" />
     <fmt:message bundle="${loc}" key="locale.default.locale_botton.ru" var="locale_button_ru" />
-    <fmt:message bundle="${loc}" key="locale.addNewMovie.welcome_message" var="welcome_message" />
     <fmt:message bundle="${loc}" key="locale.addNewMovie.movie_title" var="movie_title" />
     <fmt:message bundle="${loc}" key="locale.addNewMovie.movie_director" var="movie_director" />
     <fmt:message bundle="${loc}" key="locale.addNewMovie.movie_released_year" var="movie_released_year" />
@@ -31,8 +30,6 @@
    <input type="submit" name="${locale_button_en}" value="${locale_button_en}" />
 </form>
 </div>
-
-<h1>${welcome_message}</h1>
 
 <table cellspacing="2" border="1" cellpadding="5" bordercolor="gray">
 		<caption>
@@ -59,6 +56,7 @@
 				</c:forEach>
 	</table>
 	<form action="Servlet" method="post">
+	<a href="Servlet?command=goToAddNewMovie">${add_movie}</a>
 		<c:if test="${count > lastrow}">
 			<input type="submit" name="command" value="showNextPage">
 		</c:if>

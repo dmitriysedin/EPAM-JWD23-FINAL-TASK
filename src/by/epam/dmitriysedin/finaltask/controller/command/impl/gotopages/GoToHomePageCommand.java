@@ -1,4 +1,4 @@
-package by.epam.dmitriysedin.finaltask.controller.command.impl;
+package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopages;
 
 import java.io.IOException;
 
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpSession;
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 
+public class GoToHomePageCommand implements Command{
 
-public class GoToRegistrationPageCommand implements Command{
+	private static final String TARGET_PAGE = "/WEB-INF/jsp/home.jsp";
 	
-	private static final String TARGET_PAGE = "/WEB-INF/jsp/registration.jsp";
-
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		HttpSession session;
 		
 		String url = CreatorFullURL.create(request);
