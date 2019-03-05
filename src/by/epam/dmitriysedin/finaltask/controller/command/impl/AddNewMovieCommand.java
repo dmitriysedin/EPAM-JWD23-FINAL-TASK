@@ -38,7 +38,7 @@ public class AddNewMovieCommand implements Command{
 		MovieService movieService = ServiceProvider.getInstance().getMovieService();
 		
 		try {
-			movieService.isAddedNewMovie(createMovieInfo(movieTitle, movieDirector, movieReleasedYear));
+			movieService.addNewMovie(createMovieInfo(movieTitle, movieDirector, movieReleasedYear));
 			
 		} catch (ServiceException e) {
 			// log

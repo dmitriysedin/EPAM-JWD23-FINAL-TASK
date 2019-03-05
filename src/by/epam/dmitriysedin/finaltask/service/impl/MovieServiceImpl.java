@@ -15,29 +15,45 @@ import by.epam.dmitriysedin.finaltask.service.ServiceException;
 public class MovieServiceImpl implements MovieService{
 
 	@Override
-	public List<Movie> selectAllMovies() throws ServiceException {
+	public List<MovieInfo> selectAllMovies() throws ServiceException {
 		
 		MovieDAO movieDAO = DAOProvider.getInstance().getMovieDAO();
 		
-		List<Movie> movies = new ArrayList<Movie>();
+		List<MovieInfo> moviesInfo = new ArrayList<MovieInfo>();
 		
 		try {
-			movies = movieDAO.selectAll();
+			moviesInfo = movieDAO.selectAll();
 		} catch (DAOException e) {
-			e.printStackTrace();
+			throw new ServiceException(e);
 		}
 		
-		return movies;
+		return moviesInfo;
+	}
+	
+	@Override
+	public MovieInfo selectConcreteMovie(int id) throws ServiceException {
+
+		MovieDAO movieDAO = DAOProvider.getInstance().getMovieDAO();
+		
+		MovieInfo movieInfo = null;
+		
+		try {
+			movieInfo = movieDAO.selectConcreteMovie(id);
+		} catch (DAOException e) {
+			throw new ServiceException(e);
+		}
+		
+		return movieInfo;
 	}
 
 	@Override
-	public boolean isAddedNewMovie(MovieInfo movieInfo) throws ServiceException {
+	public boolean addNewMovie(MovieInfo movieInfo) throws ServiceException {
 		
 		MovieDAO movieDAO = DAOProvider.getInstance().getMovieDAO();
 		
 		boolean isAddedNewMovieResult;
 		try {
-			isAddedNewMovieResult = movieDAO.isAddedNewMovie(movieInfo);
+			isAddedNewMovieResult = movieDAO.addMovie(movieInfo);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}

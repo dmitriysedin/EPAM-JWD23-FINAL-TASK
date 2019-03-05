@@ -1,6 +1,7 @@
 package by.epam.dmitriysedin.finaltask.dao;
 
 import by.epam.dmitriysedin.finaltask.dao.impl.SQLMovieDAO;
+import by.epam.dmitriysedin.finaltask.dao.impl.SQLRateDAO;
 import by.epam.dmitriysedin.finaltask.dao.impl.SQLUserDAO;
 
 public class DAOProvider {
@@ -9,6 +10,7 @@ public class DAOProvider {
 	
 	private final UserDAO userDAO = new SQLUserDAO();
 	private final MovieDAO movieDAO = new SQLMovieDAO();
+	private final RateDAO rateDAO = new SQLRateDAO();
 	
 	private DAOProvider() {
 		
@@ -24,6 +26,10 @@ public class DAOProvider {
 
 	public MovieDAO getMovieDAO() {
 		return movieDAO;
+	}
+
+	public RateDAO getRateDAO() {
+		return rateDAO;
 	}
 	
 	

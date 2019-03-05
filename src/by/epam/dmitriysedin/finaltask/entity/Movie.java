@@ -48,6 +48,7 @@ public class Movie implements Serializable{
 		this.movieReleasedYear = movieReleasedYear;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(movieDirector, movieID, movieReleasedYear, movieTitle);
@@ -61,12 +62,12 @@ public class Movie implements Serializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Movie)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Movie other = (Movie) obj;
-		return  Objects.equals(movieDirector, other.movieDirector)
-				&& movieID == other.movieID && Objects.equals(movieReleasedYear, other.movieReleasedYear)
+		return Objects.equals(movieDirector, other.movieDirector) && movieID == other.movieID
+				&& Objects.equals(movieReleasedYear, other.movieReleasedYear)
 				&& Objects.equals(movieTitle, other.movieTitle);
 	}
 

@@ -1,4 +1,4 @@
-package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopages;
+package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopage;
 
 import java.io.IOException;
 

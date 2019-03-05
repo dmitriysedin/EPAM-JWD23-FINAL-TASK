@@ -1,8 +1,11 @@
 package by.epam.dmitriysedin.finaltask.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class UserInfo {
+public class UserInfo implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	private String userLogin;
 	private String userPassword;
@@ -53,6 +56,7 @@ public class UserInfo {
 		this.userEmail = userEmail;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(userEmail, userFirstName, userLastName, userLogin, userPassword);
@@ -66,7 +70,7 @@ public class UserInfo {
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof UserInfo)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		UserInfo other = (UserInfo) obj;

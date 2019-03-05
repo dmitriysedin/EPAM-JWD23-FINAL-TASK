@@ -24,7 +24,7 @@ public class UserServiceImpl implements UserService {
 		UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
 		
 		try {
-			user = userDAO.authentification(login, password);
+			user = userDAO.authenticate(login, password);
 		} catch (DAOException e) {
 			throw new ServiceException();
 		}
@@ -33,13 +33,13 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public boolean isRegistrated(UserInfo userInfo) throws ServiceException {
+	public boolean register(UserInfo userInfo) throws ServiceException {
 		
 		UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
 		
 		boolean registrationResult;
 		try {
-			registrationResult = userDAO.isRegistrated(userInfo);
+			registrationResult = userDAO.addUser(userInfo);
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}

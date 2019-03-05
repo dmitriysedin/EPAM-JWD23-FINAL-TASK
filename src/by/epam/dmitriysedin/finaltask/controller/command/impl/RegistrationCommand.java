@@ -42,7 +42,7 @@ public class RegistrationCommand implements Command{
 		UserService userService = ServiceProvider.getInstance().getUserService();
 		
 		try {
-			userService.isRegistrated(createUserInfo(firstName, lastName, email, login, password));
+			userService.register(createUserInfo(firstName, lastName, email, login, password));
 			
 		} catch (ServiceException e) {
 			// log
@@ -56,7 +56,7 @@ public class RegistrationCommand implements Command{
 		
 		session.setAttribute("prev_request", url);
 		
-		response.sendRedirect(REDIRECT_PAGE_URL + "&registration_result=You are successfully registered. Enter your login and password.");
+		response.sendRedirect(REDIRECT_PAGE_URL + "&registration_result=Login please");
 	}
 
 	private UserInfo createUserInfo(String firstName, String lastName, String email, String login, String password) {

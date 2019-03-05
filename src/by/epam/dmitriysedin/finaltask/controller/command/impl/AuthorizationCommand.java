@@ -49,6 +49,7 @@ public class AuthorizationCommand implements Command{
 				request.setAttribute("error", "login or password error");
 				page = LOGIN_PAGE;
 			} else {
+				session.setAttribute("user", user);
 				page = HOME_PAGE;
 			}
 		} catch (ServiceException e) {

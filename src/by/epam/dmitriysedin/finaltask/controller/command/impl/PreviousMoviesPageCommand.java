@@ -11,7 +11,7 @@ import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 
 
-public class ShowPreviousMoviesPage implements Command{
+public class PreviousMoviesPageCommand implements Command{
 
 	private static final String PARAMETER_FIRST_ROW = "firstrow";
 	private static final String PARAMETER_LAST_ROW = "lastrow";
@@ -24,7 +24,7 @@ public class ShowPreviousMoviesPage implements Command{
 		HttpSession session = request.getSession();
 
 		int lastIndex = Integer.parseInt(session.getAttribute(PARAMETER_FIRST_ROW).toString());
-		int firstIndex = lastIndex - ShowAllMoviesCommand.rowsByPage;
+		int firstIndex = lastIndex - SelectionAllMoviesCommand.rowsByPage;
 
 		session.setAttribute(PARAMETER_FIRST_ROW, firstIndex);
 		session.setAttribute(PARAMETER_LAST_ROW, lastIndex);

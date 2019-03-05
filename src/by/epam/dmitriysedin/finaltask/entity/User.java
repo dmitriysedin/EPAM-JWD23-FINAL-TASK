@@ -61,13 +61,11 @@ public class User implements Serializable{
 	public void setUserRole(String userRole) {
 		this.userRole = userRole;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(userEmail, userFirstName, userID, userLastName, userLogin, userPassword,
-				userRole);
+		return Objects.hash(userEmail, userFirstName, userID, userLastName, userLogin, userPassword, userRole);
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -76,14 +74,14 @@ public class User implements Serializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof User)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		User other = (User) obj;
-		return Objects.equals(userEmail, other.userEmail)
-				&& Objects.equals(userFirstName, other.userFirstName) && userID == other.userID
-				&& Objects.equals(userLastName, other.userLastName) && Objects.equals(userLogin, other.userLogin)
-				&& Objects.equals(userPassword, other.userPassword) && Objects.equals(userRole, other.userRole);
+		return Objects.equals(userEmail, other.userEmail) && Objects.equals(userFirstName, other.userFirstName)
+				&& userID == other.userID && Objects.equals(userLastName, other.userLastName)
+				&& Objects.equals(userLogin, other.userLogin) && Objects.equals(userPassword, other.userPassword)
+				&& Objects.equals(userRole, other.userRole);
 	}
 	
 	@Override

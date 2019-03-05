@@ -1,4 +1,4 @@
-package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopages;
+package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopage;
 
 import java.io.IOException;
 
@@ -11,14 +11,14 @@ import javax.servlet.http.HttpSession;
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 
-public class GoToShowAllMoviesPageCommand implements Command{
+public class GoToAddNewRatePageCommand implements Command{
 
-	private static final String TARGET_PAGE = "/WEB-INF/jsp/showAllMovies.jsp";
+	private static final String TARGET_PAGE = "/WEB-INF/jsp/addNewRate.jsp";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session;
+		
+HttpSession session;
 		
 		String url = CreatorFullURL.create(request);
 		
@@ -28,7 +28,7 @@ public class GoToShowAllMoviesPageCommand implements Command{
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(TARGET_PAGE);
 		dispatcher.forward(request, response);
+		
 	}
 
-	
 }

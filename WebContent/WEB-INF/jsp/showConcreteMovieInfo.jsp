@@ -31,34 +31,41 @@
 </form>
 </div>
 
+<h1>
+		<c:out value="Название фильма ${sessionScope.movieInfo.movieTitle}" /><br>
+		<c:out value="Режиссер ${sessionScope.movieInfo.movieDirector}" /><br>
+		<c:out value="Год выхода в прокат ${sessionScope.movieInfo.movieReleasedYear}" /><br>
+		<c:out value="Рейтинг ${sessionScope.movieInfo.movieAVGRate}" />
+		</h1>
+
 <table cellspacing="2" border="1" cellpadding="5" bordercolor="gray">
 		<caption>
-			<h1>List of movies</h1>
+			<h1>List of rates</h1>
 		</caption>
 		<br>
 		<tr>
-			<th>Movie's id</th>
-			<th>Movie's title</th>
-			<th>Movie's director</th>
-			<th>Movie's released year</th>
-			<th>Movie's rate</th>
+			<th>Date</th>
+			<th>Rate</th>
+			<th>User first name</th>
+			<th>User lst name</th>
+			<th>Comment</th>
 		</tr>
 		<c:set var="count" scope="request" value="${0}"></c:set>
-		<c:forEach items="${moviesList}" var="movies">
+		<c:forEach items="${sessionScope.ratesList}" var="rates">
 					<c:if test="${count >= firstrow && count < lastrow}">
 						<tr>
-							<td><c:out value="${movies.movieID}"></c:out>
-							<td><a href="Servlet?command=concreteMovieInfo&movie_id=${movies.movieID}">${movies.movieTitle}</a></td>
-							<td><c:out value="${movies.movieDirector}"></c:out></td>
-							<td><c:out value="${movies.movieReleasedYear}"></c:out></td>
-							<td><c:out value="${movies.movieAVGRate}"></c:out></td>
+							<td><c:out value="${rates.rateDate}"></c:out></td>
+							<td><c:out value="${rates.rateValue}"></c:out></td>
+							<td><c:out value="${rates.userFirstName}"></c:out></td>
+							<td><c:out value="${rates.userLastName}"></c:out></td>
+							<td><c:out value="${rates.rateComment}"></c:out></td>
 						</tr>
 					</c:if>
 					<c:set var="count" value="${count + 1}"></c:set>
 				</c:forEach>
 	</table>
 	<form action="Servlet" method="post">
-	
+	<a href="Servlet?command=goToAddNewRate">Add rate</a>
 		<c:if test="${count > lastrow}">
 			<input type="submit" name="command" value="showNextPage">
 		</c:if>

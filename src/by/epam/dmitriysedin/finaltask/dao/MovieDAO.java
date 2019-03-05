@@ -7,7 +7,9 @@ import by.epam.dmitriysedin.finaltask.entity.MovieInfo;
 
 public interface MovieDAO {
 
-	List<Movie> selectAll() throws DAOException;
+	List<MovieInfo> selectAll() throws DAOException;
 
-	boolean isAddedNewMovie(MovieInfo movieInfo) throws DAOException;
+	boolean addMovie(MovieInfo movieInfo) throws DAOException;
+	
+	MovieInfo selectConcreteMovie(int id) throws DAOException;
 }

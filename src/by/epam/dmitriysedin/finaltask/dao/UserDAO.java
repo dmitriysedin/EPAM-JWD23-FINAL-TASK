@@ -5,9 +5,9 @@ import by.epam.dmitriysedin.finaltask.entity.UserInfo;
 
 public interface UserDAO {
 	
-	User authentification(String login, String password) throws DAOException;
+	User authenticate(String login, String password) throws DAOException;
 	
 	boolean isLoginContains(String login) throws DAOException;
 	
-	boolean isRegistrated(UserInfo userInfo)  throws DAOException;
+	boolean addUser(UserInfo userInfo)  throws DAOException;
 }

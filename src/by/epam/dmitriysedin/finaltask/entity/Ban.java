@@ -57,7 +57,7 @@ public class Ban implements Serializable{
 	public void setBanComment(String banComment) {
 		this.banComment = banComment;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(banComment, banEnd, banID, banStart, userID);
@@ -71,7 +71,7 @@ public class Ban implements Serializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Ban)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Ban other = (Ban) obj;

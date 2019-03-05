@@ -9,9 +9,9 @@ public class Rate implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	private int rateID;
-	private Movie movieID;
-	private User userID;
-	private String rateValueString;
+	private int movieID;
+	private int userID;
+	private int rateValue;
 	private Calendar rateDate;
 	private String rateComment;
 	
@@ -27,28 +27,28 @@ public class Rate implements Serializable{
 		this.rateID = rateID;
 	}
 
-	public Movie getMovieID() {
+	public int getMovieID() {
 		return movieID;
 	}
 
-	public void setMovieID(Movie movieID) {
+	public void setMovieID(int movieID) {
 		this.movieID = movieID;
 	}
 
-	public User getUserID() {
+	public int getUserID() {
 		return userID;
 	}
 
-	public void setUserID(User userID) {
+	public void setUserID(int userID) {
 		this.userID = userID;
 	}
 
-	public String getRateValueString() {
-		return rateValueString;
+	public int getRateValue() {
+		return rateValue;
 	}
 
-	public void setRateValueString(String rateValueString) {
-		this.rateValueString = rateValueString;
+	public void setRateValue(int rateValueString) {
+		this.rateValue = rateValueString;
 	}
 
 	public Calendar getRateDate() {
@@ -69,7 +69,7 @@ public class Rate implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(movieID, rateComment, rateDate, rateID, rateValueString, userID);
+		return Objects.hash(movieID, rateComment, rateDate, rateID, rateValue, userID);
 	}
 
 	@Override
@@ -80,20 +80,20 @@ public class Rate implements Serializable{
 		if (obj == null) {
 			return false;
 		}
-		if (!(obj instanceof Rate)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
 		Rate other = (Rate) obj;
-		return Objects.equals(movieID, other.movieID) && Objects.equals(rateComment, other.rateComment)
-				&& Objects.equals(rateDate, other.rateDate) && rateID == other.rateID
-				&& Objects.equals(rateValueString, other.rateValueString) && Objects.equals(userID, other.userID);
+		return movieID == other.movieID && Objects.equals(rateComment, other.rateComment)
+				&& Objects.equals(rateDate, other.rateDate) && rateID == other.rateID && rateValue == other.rateValue
+				&& userID == other.userID;
 	}
 
 	@Override
 	public String toString() {
-		return "Rate [rateID=" + rateID + ", movieID=" + movieID + ", userID=" + userID + ", rateValueString="
-				+ rateValueString + ", rateDate=" + rateDate + ", rateComment=" + rateComment + "]";
+		return "Rate [rateID=" + rateID + ", movieID=" + movieID + ", userID=" + userID + ", rateValue=" + rateValue
+				+ ", rateDate=" + rateDate + ", rateComment=" + rateComment + "]";
 	}
 	
-	
+
 }

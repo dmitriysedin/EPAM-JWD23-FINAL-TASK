@@ -8,13 +8,7 @@ import by.epam.dmitriysedin.finaltask.service.ServiceException;
 public class LoginValidation{
 	
 	public static boolean isLoginContains(String login) throws ServiceException{
-		UserDAO userDAO = DAOProvider.getInstance().getUserDAO();
-		
-		try {
-			return userDAO.isLoginContains(login);
-		} catch (DAOException e) {
-			throw new ServiceException();
-		}
+		return true;
 	}
 	
 }
