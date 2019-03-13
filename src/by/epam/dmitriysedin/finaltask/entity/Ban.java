@@ -7,7 +7,7 @@ import java.util.Objects;
 public class Ban implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-
+	
 	private int banID;
 	private int userID;
 	private Calendar banStart;
