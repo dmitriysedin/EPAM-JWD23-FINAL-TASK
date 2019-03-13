@@ -1,4 +1,4 @@
-package by.epam.dmitriysedin.finaltask.controller.command.impl.gotopage;
+package by.epam.dmitriysedin.finaltask.controller.command.impl;
 
 import java.io.IOException;
 
@@ -11,18 +11,19 @@ import javax.servlet.http.HttpSession;
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 
-public class GoToHomePageCommand implements Command{
+public class LogOutCommand implements Command{
 
-	private static final String TARGET_PAGE = "/WEB-INF/jsp/home.jsp";
+	private static final String PARAMETER_USER = "user";
+	private static final String TARGET_PAGE = "Servlet?command=goToShowAllMoviesPageCommand";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session;
+		
+		HttpSession session = request.getSession(true);
+		
+		session.removeAttribute(PARAMETER_USER);
 		
 		String url = CreatorFullURL.create(request);
-		
-		session = request.getSession(true);
 		
 		session.setAttribute("prev_request", url);
 		
@@ -31,5 +32,4 @@ public class GoToHomePageCommand implements Command{
 		
 	}
 
-	
 }

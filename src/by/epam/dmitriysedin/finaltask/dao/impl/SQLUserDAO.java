@@ -17,7 +17,7 @@ public class SQLUserDAO implements UserDAO {
 
 	private static final String QUERY_CHECK_LOGIN = "SELECT * FROM users WHERE user_login=?";
 	private static final String INSERT_INTO_USERS = "INSERT INTO users(user_login, user_password, user_first_name, "
-			+ "user_last_name, user_email) VALUES(?, ?, ?, ?, ?)";
+			+ "user_last_name, user_email, user_role) VALUES(?, ?, ?, ?, ?, ?)";
 
 	public boolean isLoginContains(String login) {
 		 Connection con = null;
@@ -105,6 +105,7 @@ public class SQLUserDAO implements UserDAO {
 			st.setString(3, userInfo.getUserFirstName());
 			st.setString(4, userInfo.getUserLastName());
 			st.setString(5, userInfo.getUserEmail());
+			st.setString(6, "ADMIN");
 
 			st.executeUpdate();
 
@@ -122,6 +123,7 @@ public class SQLUserDAO implements UserDAO {
 	private User createUser(ResultSet rs) throws SQLException {
 		User user = new User();
 
+		user.setUserLogin(rs.getString("user_login"));
 		user.setUserID(Integer.parseInt(rs.getString("user_id")));
 		user.setUserFirstName(rs.getString("user_first_name"));
 		user.setUserLastName(rs.getString("user_last_name"));

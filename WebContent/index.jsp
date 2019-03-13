@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<c:redirect url="Servlet?command=goToHomePage" />
+<c:redirect url="Servlet?command=showAllMovies" />
 
 </body>
 </html>

@@ -29,7 +29,7 @@ public class Controller extends HttpServlet {
 		String commandName = request.getParameter(PARAMETER_COMMAND);
 
 		Command command = CommandProvider.getInstance().getCommand(commandName);
-		
+
 		command.execute(request, response);
 		
 	}

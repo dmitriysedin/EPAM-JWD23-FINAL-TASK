@@ -20,14 +20,18 @@ import by.epam.dmitriysedin.finaltask.service.ServiceProvider;
 public class ConcreteMovieInfoCommand implements Command{
 	
 	private static final String MOVIE_ID = "movie_id";
-	private static final String PARAMETER_FIRST_ROW = "firstrow";
-	private static final String PARAMETER_LAST_ROW = "lastrow";
+	private static final String PARAMETER_FIRST_ROW = "concreteMovieFirstRow";
+	private static final String PARAMETER_LAST_ROW = "concreteMovieLastRow";
 	private static final String PARAMETER_RATE_LIST = "ratesList";
 	private static final String PARAMETER_MOVIE_INFO = "movieInfo";
+	private static final String PARAMETER_NUMBER_OF_PAGES = "concreteMovieNumberOfPages";
+	private static final String PARAMETER_NUMBER_OF_CURRENT_PAGE = "concreteMovieNumberOfCurrentPage";
 	
 	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToShowConcreteMovieInfoPageCommand";
 	
 	public static final int rowsByPage = 5;
+	
+	public static final int pageNumber = 1;
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,6 +64,11 @@ public class ConcreteMovieInfoCommand implements Command{
 		
 		session.setAttribute(PARAMETER_RATE_LIST, rateList);
 		session.setAttribute(PARAMETER_MOVIE_INFO, movieInfo);
+		
+		int numbOfPages = (int) Math.ceil(rateList.size() / (double)rowsByPage);
+		
+		session.setAttribute(PARAMETER_NUMBER_OF_PAGES, numbOfPages);
+		session.setAttribute(PARAMETER_NUMBER_OF_CURRENT_PAGE, pageNumber);
 		
 		String url = CreatorFullURL.create(request);
 		

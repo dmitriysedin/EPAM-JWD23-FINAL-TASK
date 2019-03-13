@@ -21,10 +21,8 @@ public class AuthorizationCommand implements Command{
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
 
-	private static final String HOME_PAGE = "/WEB-INF/jsp/home.jsp";
+	private static final String HOME_PAGE = "/WEB-INF/jsp/showAllMovies.jsp";
 	private static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
-	
-	private static final String DEFAULT_USER_ROLE = "user";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

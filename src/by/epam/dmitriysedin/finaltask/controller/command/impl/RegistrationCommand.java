@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
+import by.epam.dmitriysedin.finaltask.entity.User;
 import by.epam.dmitriysedin.finaltask.entity.UserInfo;
 import by.epam.dmitriysedin.finaltask.service.ServiceException;
 import by.epam.dmitriysedin.finaltask.service.ServiceProvider;
@@ -22,7 +23,7 @@ public class RegistrationCommand implements Command{
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
 	
-	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToLoginPage";
+	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToShowAllMoviesPageCommand";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,9 +41,13 @@ public class RegistrationCommand implements Command{
 		password = request.getParameter(PARAMETER_PASSWORD);
 		
 		UserService userService = ServiceProvider.getInstance().getUserService();
+		UserInfo userInfo = null;
+		User user = null;
 		
 		try {
-			userService.register(createUserInfo(firstName, lastName, email, login, password));
+			userInfo = createUserInfo(firstName, lastName, email, login, password);
+			userService.register(userInfo);
+			user = userService.authentification(login, password);
 			
 		} catch (ServiceException e) {
 			// log
@@ -55,8 +60,9 @@ public class RegistrationCommand implements Command{
 		String url = CreatorFullURL.create(request);
 		
 		session.setAttribute("prev_request", url);
+		session.setAttribute("user", user);
 		
-		response.sendRedirect(REDIRECT_PAGE_URL + "&registration_result=Login please");
+		response.sendRedirect(REDIRECT_PAGE_URL);
 	}
 
 	private UserInfo createUserInfo(String firstName, String lastName, String email, String login, String password) {

@@ -23,7 +23,7 @@ public class GoToShowAllMoviesPageCommand implements Command{
 		String url = CreatorFullURL.create(request);
 		
 		session = request.getSession(true);
-		
+
 		session.setAttribute("prev_request", url);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(TARGET_PAGE);
