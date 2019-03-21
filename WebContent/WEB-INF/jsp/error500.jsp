@@ -12,9 +12,8 @@
 	<fmt:setLocale value="${sessionScope.local}" />
 	<fmt:setBundle basename="resources.locale" var="loc" />
 	<fmt:message bundle="${loc}" key="locale.error.error" var="error" />
-	<fmt:message bundle="${loc}" key="locale.error.info403" var="info403" />
-	<fmt:message bundle="${loc}" key="locale.error.forbidden"
-		var="forbidden" />
+	<fmt:message bundle="${loc}" key="locale.error.info500" var="info500" />
+
 	<fmt:message bundle="${loc}" key="locale.default.go_to_home_page"
 		var="home" />
 
@@ -32,8 +31,8 @@
 	<br>
 	<br>
 
-	<H1>${error}403. ${forbidden}</H1>
-	<h2>${info403}</h2>
+	<H1>${error} 500</H1>
+	<h2>${info500}</h2>
 
 </body>
 </html>

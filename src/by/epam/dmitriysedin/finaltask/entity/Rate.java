@@ -64,7 +64,7 @@ public class Rate implements Serializable{
 	}
 
 	public void setRateComment(String rateComment) {
-		this.rateComment = rateComment;
+			this.rateComment = rateComment;
 	}
 
 	@Override

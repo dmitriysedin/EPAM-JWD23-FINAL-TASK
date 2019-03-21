@@ -8,7 +8,7 @@ public interface RateService {
 
 	List<RateInfo> selectConcretMovieRates(int id) throws ServiceException; 
 	
-	boolean addRate(RateInfo rateInfo) throws ServiceException;
+	void addRate(RateInfo rateInfo) throws ServiceException;
 	
 	RateInfo selectConcreteRate(int id) throws ServiceException;
 }

@@ -15,6 +15,7 @@ public class LogOutCommand implements Command{
 
 	private static final String PARAMETER_USER = "user";
 	private static final String TARGET_PAGE = "Servlet?command=goToShowAllMoviesPageCommand";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,7 +26,7 @@ public class LogOutCommand implements Command{
 		
 		String url = CreatorFullURL.create(request);
 		
-		session.setAttribute("prev_request", url);
+		session.setAttribute(PARAMETER_PREVIOUS_REQUEST, url);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(TARGET_PAGE);
 		dispatcher.forward(request, response);

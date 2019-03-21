@@ -7,7 +7,6 @@ import by.epam.dmitriysedin.finaltask.dao.DAOException;
 import by.epam.dmitriysedin.finaltask.dao.DAOProvider;
 import by.epam.dmitriysedin.finaltask.dao.MovieDAO;
 
-import by.epam.dmitriysedin.finaltask.entity.Movie;
 import by.epam.dmitriysedin.finaltask.entity.MovieInfo;
 import by.epam.dmitriysedin.finaltask.service.MovieService;
 import by.epam.dmitriysedin.finaltask.service.ServiceException;
@@ -47,18 +46,18 @@ public class MovieServiceImpl implements MovieService{
 	}
 
 	@Override
-	public boolean addNewMovie(MovieInfo movieInfo) throws ServiceException {
+	public void addNewMovie(MovieInfo movieInfo) throws ServiceException {
 		
 		MovieDAO movieDAO = DAOProvider.getInstance().getMovieDAO();
-		
-		boolean isAddedNewMovieResult;
+
 		try {
-			isAddedNewMovieResult = movieDAO.addMovie(movieInfo);
+			if(!movieDAO.addMovie(movieInfo)){
+				throw new ServiceException("Method addMovie() returned false");
+			}
 		} catch (DAOException e) {
 			throw new ServiceException(e);
 		}
-		
-		return isAddedNewMovieResult;
+
 	}
 
 	

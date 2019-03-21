@@ -19,7 +19,11 @@ import by.epam.dmitriysedin.finaltask.service.UserService;
 public class AuthorizationCommand implements Command{
 	
 	private static final String PARAMETER_LOGIN = "login";
+	private static final String PARAMETER_USER = "user";
 	private static final String PARAMETER_PASSWORD = "password";
+	private static final String PARAMETER_WRONG_PARAMS = "wrong_params";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
+	private static final Integer ERROR_NUMBER_500 = 500;
 
 	private static final String HOME_PAGE = "/WEB-INF/jsp/showAllMovies.jsp";
 	private static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
@@ -28,12 +32,10 @@ public class AuthorizationCommand implements Command{
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession(true);
-		
-		String login;
-		String password;
+		String url = CreatorFullURL.create(request);
 
-		login = request.getParameter(PARAMETER_LOGIN);
-		password = request.getParameter(PARAMETER_PASSWORD);
+		String login = request.getParameter(PARAMETER_LOGIN);
+		String password = request.getParameter(PARAMETER_PASSWORD);
 		
 		UserService userService = ServiceProvider.getInstance().getUserService();
 		
@@ -44,20 +46,19 @@ public class AuthorizationCommand implements Command{
 			user = userService.authentification(login, password);
 			
 			if (user == null) {
-				request.setAttribute("error", "login or password error");
+				request.setAttribute(PARAMETER_WRONG_PARAMS, "true");
 				page = LOGIN_PAGE;
 			} else {
-				session.setAttribute("user", user);
+				session.setAttribute(PARAMETER_USER, user);
 				page = HOME_PAGE;
 			}
 		} catch (ServiceException e) {
 			// log
-			//page = ERROR_PAGE;
+			response.sendError(ERROR_NUMBER_500);
+			return;
 		}
 		
-		String url = CreatorFullURL.create(request);
-		
-		session.setAttribute("prev_request", url);
+		session.setAttribute(PARAMETER_PREVIOUS_REQUEST, url);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(page);
 		dispatcher.forward(request, response);

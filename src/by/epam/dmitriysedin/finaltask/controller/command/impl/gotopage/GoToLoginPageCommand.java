@@ -15,6 +15,8 @@ import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 public class GoToLoginPageCommand implements Command{
 
 	private static final String TARGET_PAGE = "/WEB-INF/jsp/login.jsp";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
+	//private static final String PARAMETER_REGISTRATION_RESULT = "registration_result";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,14 +27,13 @@ public class GoToLoginPageCommand implements Command{
 		
 		session = request.getSession(true);
 		
-		session.setAttribute("prev_request", url);
+		session.setAttribute(PARAMETER_PREVIOUS_REQUEST, url);
 		
-		request.setAttribute("registration_result", request.getParameter("registration_result"));
+		//request.setAttribute(PARAMETER_REGISTRATION_RESULT, request.getParameter(PARAMETER_REGISTRATION_RESULT));
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(TARGET_PAGE);
 		dispatcher.forward(request, response);
 		
 	}
 
-	
 }

@@ -14,6 +14,7 @@ import by.epam.dmitriysedin.finaltask.controller.command.util.CreatorFullURL;
 public class GoToShowAllMoviesPageCommand implements Command{
 
 	private static final String TARGET_PAGE = "/WEB-INF/jsp/showAllMovies.jsp";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,7 +25,7 @@ public class GoToShowAllMoviesPageCommand implements Command{
 		
 		session = request.getSession(true);
 
-		session.setAttribute("prev_request", url);
+		session.setAttribute(PARAMETER_PREVIOUS_REQUEST, url);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(TARGET_PAGE);
 		dispatcher.forward(request, response);

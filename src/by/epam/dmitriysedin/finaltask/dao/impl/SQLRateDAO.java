@@ -5,19 +5,22 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import by.epam.dmitriysedin.finaltask.dao.DAOException;
 import by.epam.dmitriysedin.finaltask.dao.RateDAO;
 import by.epam.dmitriysedin.finaltask.dao.connectionpool.myconnectionpool.ConnectionPoolException;
 import by.epam.dmitriysedin.finaltask.dao.connectionpool.myconnectionpool.MyConnectionPool;
-import by.epam.dmitriysedin.finaltask.entity.MovieInfo;
 import by.epam.dmitriysedin.finaltask.entity.RateInfo;
 
 public class SQLRateDAO implements RateDAO{
 
-	private static final String SELECT_CONCRETE_USER_RATES = "SELECT * FROM rates_with_user_name_and_user_status WHERE users_user_id = ?";
+	private static final Logger logger = LogManager.getLogger(SQLRateDAO.class);
+	
+	//private static final String SELECT_CONCRETE_USER_RATES = "SELECT * FROM rates_with_user_name_and_user_status WHERE users_user_id = ?";
 	private static final String SELECT_CONCRETE_MOVIE_RATES = "SELECT * FROM rates_with_user_name_and_user_status WHERE movies_movie_id = ?";
 	private static final String INSERT_INTO_RATES = "INSERT INTO rates(movies_movie_id, users_user_id, rate_value, rate_date, rate_comment)"
 			+ "VALUES(?, ?, ?, ?, ?)";
@@ -46,12 +49,11 @@ public class SQLRateDAO implements RateDAO{
 				rates.add(createRateInfo(rs));
 			}
 
-		} catch (ConnectionPoolException e1) {	
-			// log + throw exception
-		} catch (SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) {
+			logger.error("SQLException in SQLRateDAO/selectConcretMovieRates()", e);
 			throw new DAOException(e);
 		} finally {
-			myConnectionPool.closeConnection(con, st, rs);
+			myConnectionPool.closeConnection(con, st);
 		}
 
 		return rates;
@@ -68,7 +70,7 @@ public class SQLRateDAO implements RateDAO{
 
 		try {
 			con = myConnectionPool.takeConnection();
-			
+			con.setAutoCommit(false);
 			st = con.prepareStatement(INSERT_INTO_RATES);
 			
 			st.setInt(1, rateInfo.getMovieID());
@@ -76,18 +78,25 @@ public class SQLRateDAO implements RateDAO{
 			st.setInt(3, rateInfo.getRateValue());
 			st.setTimestamp(4, rateInfo.getRateDate());
 			st.setString(5, rateInfo.getRateComment());
+
+			if(st.executeUpdate() > 0) {
+			con.commit();
+			return true;
+			}
 			
-			st.executeUpdate();
-			
-		} catch (ConnectionPoolException e1) {	
-			// log + throw exception
-		} catch (SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) {
+			logger.error("SQLException in SQLRateDAO/addRate()", e);
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				logger.error("SQLException in catch-block in SQLRateDAO/addRate()", e);
+				throw new DAOException(e1);
+			}
 			throw new DAOException(e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}
-
-		return true;
+		return false;
 	}
 
 	@Override

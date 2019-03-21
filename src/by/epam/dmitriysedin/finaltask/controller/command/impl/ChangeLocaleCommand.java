@@ -11,19 +11,20 @@ import by.epam.dmitriysedin.finaltask.controller.command.Command;
 
 
 public class ChangeLocaleCommand implements Command{
+	
+	private static final String PARAMETER_LOCALE = "locale";
+	private static final String SESION_ATTRIBUTE_LOCAL = "local";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String newLocale;
-		HttpSession session;
 		
-		newLocale = request.getParameter("locale");
+		String newLocale = request.getParameter(PARAMETER_LOCALE);
+		HttpSession session = request.getSession(true);
 		
-		session = request.getSession(true);
-		session.setAttribute("local", newLocale);
+		session.setAttribute(SESION_ATTRIBUTE_LOCAL, newLocale);
 		
-		String url = (String)request.getSession(false).getAttribute("prev_request");
-		
+		String url = (String)request.getSession(false).getAttribute(PARAMETER_PREVIOUS_REQUEST);
 		
 		response.sendRedirect(url);
 		

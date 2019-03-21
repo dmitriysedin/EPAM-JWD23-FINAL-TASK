@@ -26,17 +26,26 @@ public class Controller extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		String commandName = request.getParameter(PARAMETER_COMMAND);
-
-		Command command = CommandProvider.getInstance().getCommand(commandName);
-
-		command.execute(request, response);
+		process(request, response);
 		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		doGet(request, response);
+		
+		process(request, response);
 		
 	}
+	
+	private void process (HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		String commandName = request.getParameter(PARAMETER_COMMAND);
+
+		Command command = CommandProvider.getInstance().getCommand(commandName);
+
+		command.execute(request, response);
+
+	}
+	
 }

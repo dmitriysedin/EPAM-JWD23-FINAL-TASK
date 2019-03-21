@@ -22,23 +22,25 @@ public class RegistrationCommand implements Command{
 	private static final String PARAMETER_EMAIL = "email";
 	private static final String PARAMETER_LOGIN = "login";
 	private static final String PARAMETER_PASSWORD = "password";
+	private static final String PARAMETER_PREVIOUS_REQUEST = "prev_request";
+	private static final String PARAMETER_USER = "user";
+	private static final Integer ERROR_NUMBER_500 = 500;
 	
-	private static final String REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToShowAllMoviesPageCommand";
+	private static final String SUCCESSFUL_REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToShowAllMoviesPageCommand";
+	private static final String UNSUCCESSFUL_REDIRECT_PAGE_URL = "http://localhost:8080/jwd23_final_task/Servlet?command=goToRegistrationPage&wrong_params=true";
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String firstName;
-		String lastName;
-		String email;
-		String login;
-		String password;
 
-		firstName = request.getParameter(PARAMETER_FIRST_NAME);
-		lastName = request.getParameter(PARAMETER_LAST_NAME);
-		email = request.getParameter(PARAMETER_EMAIL);
-		login = request.getParameter(PARAMETER_LOGIN);
-		password = request.getParameter(PARAMETER_PASSWORD);
+		String redirectPage = UNSUCCESSFUL_REDIRECT_PAGE_URL;
+		String firstName = request.getParameter(PARAMETER_FIRST_NAME);
+		String lastName = request.getParameter(PARAMETER_LAST_NAME);
+		String email = request.getParameter(PARAMETER_EMAIL);
+		String login = request.getParameter(PARAMETER_LOGIN);
+		String password = request.getParameter(PARAMETER_PASSWORD);
+		String url = CreatorFullURL.create(request);
+		
+		HttpSession session = request.getSession(true);
 		
 		UserService userService = ServiceProvider.getInstance().getUserService();
 		UserInfo userInfo = null;
@@ -46,23 +48,20 @@ public class RegistrationCommand implements Command{
 		
 		try {
 			userInfo = createUserInfo(firstName, lastName, email, login, password);
-			userService.register(userInfo);
+			if(userService.register(userInfo)){
 			user = userService.authentification(login, password);
-			
+			redirectPage = SUCCESSFUL_REDIRECT_PAGE_URL;
+			}
 		} catch (ServiceException e) {
 			// log
+			response.sendError(ERROR_NUMBER_500);
+			return;
 		} 
+			
+		session.setAttribute(PARAMETER_PREVIOUS_REQUEST, url);
+		session.setAttribute(PARAMETER_USER, user);
 		
-		HttpSession session;
-		
-		session = request.getSession(true);
-		
-		String url = CreatorFullURL.create(request);
-		
-		session.setAttribute("prev_request", url);
-		session.setAttribute("user", user);
-		
-		response.sendRedirect(REDIRECT_PAGE_URL);
+		response.sendRedirect(redirectPage);
 	}
 
 	private UserInfo createUserInfo(String firstName, String lastName, String email, String login, String password) {

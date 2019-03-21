@@ -10,4 +10,6 @@ public class DBParameter {
 	public static final String DB_USER = "db.user";
 	public static final String DB_PASSWORD = "db.password";
 	public static final String DB_POOL_SIZE = "db.poolsize";
+	public static final String DB_USE_UNICODE = "db.useUnicode";
+	public static final String DB_CHARACTER_ENCODING = "db.characterEncoding";
 }

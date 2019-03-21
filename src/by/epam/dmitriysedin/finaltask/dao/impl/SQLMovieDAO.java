@@ -7,14 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epam.dmitriysedin.finaltask.dao.DAOException;
 import by.epam.dmitriysedin.finaltask.dao.MovieDAO;
 import by.epam.dmitriysedin.finaltask.dao.connectionpool.myconnectionpool.ConnectionPoolException;
 import by.epam.dmitriysedin.finaltask.dao.connectionpool.myconnectionpool.MyConnectionPool;
-import by.epam.dmitriysedin.finaltask.entity.Movie;
 import by.epam.dmitriysedin.finaltask.entity.MovieInfo;
 
 public class SQLMovieDAO implements MovieDAO{
+	
+	private static final Logger logger = LogManager.getLogger(SQLMovieDAO.class);
 
 	private static final String SELECT_ALL_MOVIES = "SELECT * FROM all_movies_rate";
 	private static final String SELECT_CONCRETE_MOVIE = "SELECT * FROM all_movies_rate WHERE movie_id = ?";
@@ -39,17 +43,16 @@ public class SQLMovieDAO implements MovieDAO{
 			st = con.prepareStatement(SELECT_ALL_MOVIES);
 
 			rs = st.executeQuery();
-	
+			
 			while(rs.next()) {
 				movies.add(createMovieInfo(rs));
 			}
 
-		} catch (ConnectionPoolException e1) {	
-			// log + throw exception
-		} catch (SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) {
+			logger.error("SQLException in SQLMovieDAO/selectAll()", e);
 			throw new DAOException(e);
 		} finally {
-			myConnectionPool.closeConnection(con, st, rs);
+			myConnectionPool.closeConnection(con, st);
 		}
 
 		return movies;
@@ -78,12 +81,11 @@ public class SQLMovieDAO implements MovieDAO{
 				movieInfo = createMovieInfo(rs);
 			}
 			
-		} catch (ConnectionPoolException e1) {	
-			// log + throw exception
-		} catch (SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) {
+			logger.error("SQLException in SQLMovieDAO/selectConcreteMovie()", e);
 			throw new DAOException(e);
 		} finally {
-			myConnectionPool.closeConnection(con, st, rs);
+			myConnectionPool.closeConnection(con, st);
 		}
 
 		return movieInfo;
@@ -99,23 +101,32 @@ public class SQLMovieDAO implements MovieDAO{
 
 		try {
 			con = myConnectionPool.takeConnection();
+			con.setAutoCommit(false);
 			st = con.prepareStatement(INSERT_INTO_MOVIES);
 			
+
 			st.setString(1, movieInfo.getMovieTitle());
 			st.setString(2, movieInfo.getMovieDirector());
 			st.setString(3, movieInfo.getMovieReleasedYear());
 			
-			st.executeUpdate();
+			if(st.executeUpdate() > 0) {
+			con.commit();
+			return true;
+			}
 			
-		} catch (ConnectionPoolException e1) {	
-			// log + throw exception
-		} catch (SQLException e) {
+		} catch (ConnectionPoolException | SQLException e) {
+			logger.error("SQLException in SQLMovieDAO/addMovie()", e);
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				logger.error("SQLException in catch-block in SQLMovieDAO/addMovie()", e1);
+				throw new DAOException(e1);
+			}
 			throw new DAOException(e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}
-
-		return true;
+		return false;
 	}
 	
 	private MovieInfo createMovieInfo(ResultSet rs) throws SQLException {
