@@ -8,12 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import by.epam.dmitriysedin.finaltask.controller.command.Command;
 import by.epam.dmitriysedin.finaltask.controller.command.CommandProvider;
 
-
 @WebServlet("/Servlet")
 public class Controller extends HttpServlet {
+	
+	private static final Logger logger = LogManager.getLogger(Controller.class);
+	
+	private static final Integer ERROR_NUMBER_500 = 500;
 
 	private static final long serialVersionUID = 1L;
 	
@@ -44,7 +50,12 @@ public class Controller extends HttpServlet {
 
 		Command command = CommandProvider.getInstance().getCommand(commandName);
 
-		command.execute(request, response);
+		try {
+			command.execute(request, response);
+		} catch (Exception e) {
+			logger.error("Exception in Controller");
+			response.sendError(ERROR_NUMBER_500);
+		}
 
 	}
 	

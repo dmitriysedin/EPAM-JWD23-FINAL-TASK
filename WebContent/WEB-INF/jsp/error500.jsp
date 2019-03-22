@@ -22,7 +22,7 @@
 			<td align="center" width="70">
 				<form action="Servlet" method="post">
 					<input type="hidden" name="command"
-						value="goToShowAllMoviesPageCommand"> <input type="submit"
+						value="showAllMovies"> <input type="submit"
 						size="50" value="${home}" />
 				</form>
 			</td>

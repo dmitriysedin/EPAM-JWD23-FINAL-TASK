@@ -47,8 +47,8 @@ public class SQLUserDAO implements UserDAO {
 			 }
 			 
 		 } catch (ConnectionPoolException | SQLException e) {
-			 	logger.error("SQLException in SQLUserDAO/findUserByLogin()", e);
-				throw new DAOException(e);
+			 	logger.error("ConnectionPoolException or SQLException in SQLUserDAO/findUserByLogin()", e);
+				throw new DAOException("ConnectionPoolException or SQLException in SQLUserDAO/findUserByLogin()", e);
 			} finally {
 				myConnectionPool.closeConnection(con, st);
 			}
@@ -82,14 +82,14 @@ public class SQLUserDAO implements UserDAO {
 			} 
 
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLUserDAO/addUser()", e);
+			logger.error("ConnectionPoolException or SQLException in SQLUserDAO/addUser()", e);
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
 				logger.error("SQLException in catch-block SQLUserDAO/addUser()", e1);
-				throw new DAOException(e1);
+				throw new DAOException("SQLException in catch-block SQLUserDAO/addUser()", e1);
 			}
-			throw new DAOException(e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLUserDAO/addUser()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}

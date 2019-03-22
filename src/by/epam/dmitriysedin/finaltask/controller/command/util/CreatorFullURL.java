@@ -4,7 +4,10 @@ import java.util.Enumeration;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class CreatorFullURL {
+public final class CreatorFullURL {
+
+	private CreatorFullURL() {
+	}
 
 	public static String create(HttpServletRequest request) {
 		String url = "";

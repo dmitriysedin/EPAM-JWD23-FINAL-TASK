@@ -50,8 +50,8 @@ public class SQLRateDAO implements RateDAO{
 			}
 
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLRateDAO/selectConcretMovieRates()", e);
-			throw new DAOException(e);
+			logger.error("ConnectionPoolException or SQLException in SQLRateDAO/selectConcretMovieRates()", e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLRateDAO/selectConcretMovieRates()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}
@@ -85,14 +85,14 @@ public class SQLRateDAO implements RateDAO{
 			}
 			
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLRateDAO/addRate()", e);
+			logger.error("ConnectionPoolException or SQLException in SQLRateDAO/addRate()", e);
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
 				logger.error("SQLException in catch-block in SQLRateDAO/addRate()", e);
-				throw new DAOException(e1);
+				throw new DAOException("SQLException in catch-block in SQLRateDAO/addRate()", e);
 			}
-			throw new DAOException(e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLRateDAO/addRate()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}

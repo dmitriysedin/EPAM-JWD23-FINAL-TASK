@@ -114,9 +114,9 @@
 			<th>${movie_rate}</th>
 		</tr>
 		<c:set var="count" scope="request" value="${0}"></c:set>
-		<c:forEach items="${moviesList}" var="movies">
+		<c:forEach items="${sessionScope.moviesList}" var="movies">
 			<c:if
-				test="${count >= allMoviesFirstRow && count < allMoviesLastRow}">
+				test="${count >= sessionScope.allMoviesFirstRow && count < sessionScope.allMoviesLastRow}">
 				<tr>
 					<td align="center" width="75"><c:out value="${movies.movieID}"></c:out></td>
 					<td align="center" width="200"><a
@@ -134,7 +134,7 @@
 	</table>
 	<br>
 	<form action="Servlet" method="post">
-		<c:if test="${count > allMoviesLastRow}">
+		<c:if test="${count > sessionScope.allMoviesLastRow}">
 			<input type="hidden" name="first_row_parameter_name"
 				value="allMoviesFirstRow">
 			<input type="hidden" name="last_row_parameter_name"
@@ -151,7 +151,7 @@
 	</form>
 
 	<form action="Servlet" method="post">
-		<c:if test="${allMoviesFirstRow > 0}">
+		<c:if test="${sessionScope.allMoviesFirstRow > 0}">
 			<input type="hidden" name="first_row_parameter_name"
 				value="allMoviesFirstRow">
 			<input type="hidden" name="last_row_parameter_name"

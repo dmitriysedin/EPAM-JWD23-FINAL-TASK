@@ -49,7 +49,6 @@ public class SelectionAllMoviesCommand implements Command{
 		try {
 			moviesList = movieService.selectAllMovies();
 		} catch (ServiceException e) {
-			//log
 			response.sendError(ERROR_NUMBER_500);
 			return;
 		}

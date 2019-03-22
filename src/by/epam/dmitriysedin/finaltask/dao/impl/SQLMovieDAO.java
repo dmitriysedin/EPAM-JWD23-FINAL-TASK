@@ -49,8 +49,8 @@ public class SQLMovieDAO implements MovieDAO{
 			}
 
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLMovieDAO/selectAll()", e);
-			throw new DAOException(e);
+			logger.error("ConnectionPoolException or SQLException in SQLMovieDAO/selectAll()", e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLMovieDAO/selectAll()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}
@@ -82,8 +82,8 @@ public class SQLMovieDAO implements MovieDAO{
 			}
 			
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLMovieDAO/selectConcreteMovie()", e);
-			throw new DAOException(e);
+			logger.error("ConnectionPoolException or SQLException in SQLMovieDAO/selectConcreteMovie()", e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLMovieDAO/selectConcreteMovie()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}
@@ -115,14 +115,14 @@ public class SQLMovieDAO implements MovieDAO{
 			}
 			
 		} catch (ConnectionPoolException | SQLException e) {
-			logger.error("SQLException in SQLMovieDAO/addMovie()", e);
+			logger.error("ConnectionPoolException or SQLException in SQLMovieDAO/addMovie()", e);
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
 				logger.error("SQLException in catch-block in SQLMovieDAO/addMovie()", e1);
-				throw new DAOException(e1);
+				throw new DAOException("SQLException in catch-block in SQLMovieDAO/addMovie()", e1);
 			}
-			throw new DAOException(e);
+			throw new DAOException("ConnectionPoolException or SQLException in SQLMovieDAO/addMovie()", e);
 		} finally {
 			myConnectionPool.closeConnection(con, st);
 		}

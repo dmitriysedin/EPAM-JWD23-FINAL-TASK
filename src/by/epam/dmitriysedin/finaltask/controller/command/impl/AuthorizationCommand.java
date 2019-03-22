@@ -53,7 +53,6 @@ public class AuthorizationCommand implements Command{
 				page = HOME_PAGE;
 			}
 		} catch (ServiceException e) {
-			// log
 			response.sendError(ERROR_NUMBER_500);
 			return;
 		}

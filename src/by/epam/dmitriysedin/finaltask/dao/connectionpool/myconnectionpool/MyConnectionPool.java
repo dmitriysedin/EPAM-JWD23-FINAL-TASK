@@ -60,38 +60,38 @@ public class MyConnectionPool {
 		return instance;
 	}
 	
-	public void initPoolData() throws ConnectionPoolException {
+	public void initPoolData() throws ConnectionPoolException{
 
 		try {
 			Class.forName(driverName);
 			givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
 			connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
-
+			
 			for (int i = 0; i < poolSize; i++) {
 				Connection connection = DriverManager.getConnection(url, user, password);
 				PooledConnection pooledConnection = new PooledConnection(connection);
 				connectionQueue.add(pooledConnection);
 			}
+			
 		} catch (SQLException e) {
 			logger.error("SQLException in ConnectionPool", e);
-			throw new ConnectionPoolException("SQLException in ConnectionPool ", e);
+			throw new ConnectionPoolException("SQLException in ConnectionPool", e);
 		} catch (ClassNotFoundException e) {
 			logger.error("ClassNotFoundException in ConnectionPool ", e);
 			throw new ConnectionPoolException("Can't find database driver class", e);
 		}
 	}
 
-	public void dispose() throws ConnectionPoolException{
+	public void dispose(){
 		clearConnectionQueue();
 	}
 
-	private void clearConnectionQueue() throws ConnectionPoolException {
+	private void clearConnectionQueue() {
 		try {
 			closeConnectionsQueue(givenAwayConQueue);
 			closeConnectionsQueue(connectionQueue);
 		} catch (SQLException e) {
 			logger.error("SQLException in ConnectionPool/clearConnectionQueue, ", e);
-			throw new ConnectionPoolException("Error closing connection", e);
 		}
 	}
 
@@ -100,6 +100,7 @@ public class MyConnectionPool {
 		try {
 			connection = connectionQueue.take();
 			givenAwayConQueue.add(connection);
+			
 		} catch (InterruptedException e) {
 			logger.error("Error connecting to the data source.", e);
 			throw new ConnectionPoolException("Error connecting to the data source.", e);

@@ -53,7 +53,6 @@ public class RegistrationCommand implements Command{
 			redirectPage = SUCCESSFUL_REDIRECT_PAGE_URL;
 			}
 		} catch (ServiceException e) {
-			// log
 			response.sendError(ERROR_NUMBER_500);
 			return;
 		} 

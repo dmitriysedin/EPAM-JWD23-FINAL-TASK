@@ -157,7 +157,7 @@
 			<fmt:formatDate pattern="dd-MM-yyyy" value="${rates.rateDate}"
 				dateStyle="short" var="date" />
 			<c:if
-				test="${count >= concreteMovieFirstRow && count < concreteMovieLastRow}">
+				test="${count >= sessionScope.concreteMovieFirstRow && count < sessionScope.concreteMovieLastRow}">
 				<tr>
 					<td align="center" width="200"><c:out value="${date}"></c:out></td>
 					<fmt:setLocale value="${sessionScope.local}" />
@@ -175,7 +175,7 @@
 	</table>
 	<br>
 	<form action="Servlet" method="post">
-		<c:if test="${count > concreteMovieLastRow}">
+		<c:if test="${count > sessionScope.concreteMovieLastRow}">
 			<input type="hidden" name="first_row_parameter_name"
 				value="concreteMovieFirstRow">
 			<input type="hidden" name="last_row_parameter_name"
@@ -191,7 +191,7 @@
 		</c:if>
 	</form>
 	<form action="Servlet" method="post">
-		<c:if test="${concreteMovieFirstRow > 0}">
+		<c:if test="${sessionScope.concreteMovieFirstRow > 0}">
 			<input type="hidden" name="first_row_parameter_name"
 				value="concreteMovieFirstRow">
 			<input type="hidden" name="last_row_parameter_name"

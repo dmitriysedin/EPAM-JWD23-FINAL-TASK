@@ -23,6 +23,7 @@ public class ConnectionPoolListener implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
+
 		try {
 			MyConnectionPool.getInstance().initPoolData();
 			logger.info("Connection pool initialized successfully");
