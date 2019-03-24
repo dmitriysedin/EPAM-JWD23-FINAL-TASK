@@ -20,7 +20,6 @@ public class SQLRateDAO implements RateDAO{
 
 	private static final Logger logger = LogManager.getLogger(SQLRateDAO.class);
 	
-	//private static final String SELECT_CONCRETE_USER_RATES = "SELECT * FROM rates_with_user_name_and_user_status WHERE users_user_id = ?";
 	private static final String SELECT_CONCRETE_MOVIE_RATES = "SELECT * FROM rates_with_user_name_and_user_status WHERE movies_movie_id = ?";
 	private static final String INSERT_INTO_RATES = "INSERT INTO rates(movies_movie_id, users_user_id, rate_value, rate_date, rate_comment)"
 			+ "VALUES(?, ?, ?, ?, ?)";
@@ -97,12 +96,6 @@ public class SQLRateDAO implements RateDAO{
 			myConnectionPool.closeConnection(con, st);
 		}
 		return false;
-	}
-
-	@Override
-	public RateInfo selectConcreteRate(int id) throws DAOException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	private RateInfo createRateInfo(ResultSet rs) throws SQLException {

@@ -14,16 +14,14 @@
 	<fmt:message bundle="${loc}" key="locale.error.error" var="error" />
 	<fmt:message bundle="${loc}" key="locale.error.info500" var="info500" />
 
-	<fmt:message bundle="${loc}" key="locale.default.go_to_home_page"
-		var="home" />
+	<fmt:message bundle="${loc}" key="locale.default.go_to_home_page" var="home" />
 
 	<table align="center" width="70%" cellspacing="0" cellpadding="4">
 		<tr>
 			<td align="center" width="70">
 				<form action="Servlet" method="post">
-					<input type="hidden" name="command"
-						value="showAllMovies"> <input type="submit"
-						size="50" value="${home}" />
+					<input type="hidden" name="command" value="showAllMovies"/> 
+					<input type="submit" size="50" value="${home}" />
 				</form>
 			</td>
 		</tr>

@@ -10,5 +10,4 @@ public interface RateService {
 	
 	void addRate(RateInfo rateInfo) throws ServiceException;
 	
-	RateInfo selectConcreteRate(int id) throws ServiceException;
 }

@@ -7,6 +7,9 @@ public class DBResourceManager {
 	private final static DBResourceManager instance = new DBResourceManager();
 	private ResourceBundle bundle = ResourceBundle.getBundle("resources.db");
 
+	private DBResourceManager() {
+	}
+
 	public static DBResourceManager getInstance() {
 		return instance;
 	}

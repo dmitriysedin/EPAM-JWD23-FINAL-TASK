@@ -34,12 +34,6 @@ public class RateServiceImpl implements RateService{
 	}
 
 	@Override
-	public RateInfo selectConcreteRate(int id) throws ServiceException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<RateInfo> selectConcretMovieRates(int id) throws ServiceException{
 		
 		RateDAO rateDAO = DAOProvider.getInstance().getRateDAO();

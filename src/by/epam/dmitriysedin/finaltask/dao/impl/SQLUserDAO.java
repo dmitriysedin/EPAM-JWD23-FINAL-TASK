@@ -26,6 +26,7 @@ public class SQLUserDAO implements UserDAO {
 	private static final String USER_ROLE = "USER";
 
 	public User findUserByLogin(String login) throws DAOException{
+		
 		 Connection con = null;
 		 ResultSet rs = null;
 		 PreparedStatement st = null;

@@ -54,8 +54,7 @@ public class AddNewRateCommand implements Command {
 		List<RateInfo> rateList = null;
 		
 		try {
-			rateList = rateService.selectConcretMovieRates(movieID);
-		
+			
 			rateService.addRate(createRateInfo(movieID, userID, rateValue, rateComment, rateDate));
 		
 			session.setAttribute(PARAMETER_RATE_LIST, rateList = rateService.selectConcretMovieRates(movieID));
